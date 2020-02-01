@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>WebSocket demo</title>
+    </head>
+    <body>
+     
+
+<img id="img" style="height:100%;width:100%"></img>
+
+    </body>
+
+
+
+
+    <script>
+        var ws = new WebSocket("ws://192.168.0.136:8001/"),
+            messages = document.createElement('ul');
+            ws.onmessage = async function (event) {
+            // var messages = document.getElementsByTagName('ul')[0],
+            // message = document.createElement('li'),
+            // content = document.createTextNode(event.data);
+            // console.log(event.data)
+            data = await event.data.text()
+            // message.appendChild(content);
+            // messages.appendChild(message);
+            // console.log(data)
+            document.getElementById("img").src="data:image/svg;base64,"+data;
+
+            // event.data.then()
+            // var uri = URL.createObjectURL(event.data.text());
+            // var img = new Image();
+
+            // img.src = uri;
+            // document.body.appendChild(img);
+        };
+        document.body.appendChild(messages);
+
+
+//   var ws = new WebSocket("ws://127.0.0.1:5678/"),
+//                 messages = document.createElement('ul');
+//                 ws.onmessage = function (event) {
+//                 // var messages = document.getElementsByTagName('ul')[0],
+//                 // message = document.createElement('li'),
+//                 // content = document.createTextNode(event.data);
+//                 // console.log(event.data)
+//                 // console.log(event.data.text())
+//                 // message.appendChild(content);
+//                 // messages.appendChild(message);
+//                 return new Promise(function(resolve, reject) {
+//                     console.log(event)
+//                     resolve(event);
+
+
+//     });
+//                 // var uri = URL.createObjectURL(event.data.text());
+//                 // var img = new Image();
+
+//                 // img.src = uri;
+//                 // document.body.appendChild(img);
+//             };
+
+//             ws.onmessage(event).then(function(event) {
+//     // server is ready here
+//     console.log(event.data)
+// }).catch(function(err) {
+//     // error here
+// });
+        document.body.appendChild(messages);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+</html>

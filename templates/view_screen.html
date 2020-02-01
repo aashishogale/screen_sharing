@@ -1,9 +1,123 @@
 <html>
+    <head>
+        <script type="text/javascript" src="{{ url_for('static', filename = 'brython/brython.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename = 'brython/brython_stdlib.js') }}"></script>
+
+        <script type="text/javascript" src="{{ url_for('static', filename = 'brython/socket.brython.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename = 'pygame/pygame.brython.js') }}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>        <script> 
+        var socket=io("ws://192.168.0.136:8001") 
+        // make connection with server from user side 
+        socket.on('connect', function(){ 
+          console.log('Connected to Server') 
+          
+        }); 
+        </script> 
+<script>
+var has_ws=0;
+function checkWebSocket(){
+  try{
+    websocket = new WebSocket("ws:websocket.org");
+    websocket.close('');
+  }catch(e){ //throws code 15 if has socket to me babies
+    has_ws=1;
+  }
+}
+</script>
+        <!-- <script type="text/javascript" src="{{ url_for('static', filename = 'brython/websockets.brython.js') }}"></script> -->
+<script type="text/python3">
+from browser import bind, document, html, alert
+
+from socket import socket
+from zlib import decompress
+#import pygame
+
+
+
+
+def echo(ev):
+    alert("alert")
+
+def main(ev):
+    host='192.168.0.136'
+    port=8001
+   
+   #pygame.init()
+    #screen = pygame.display.set_mode((WIDTH, HEIGHT))
+    #clock = pygame.time.Clock()
+    watching = True    
+
+    sock = socket()
+    print (host)
     
+  
+    sock.connect((host, port))
+    print(sock)
+    try:
+        while watching:
+            #for event in pygame.event.get():
+             #   if event.type == pygame.QUIT:
+              #      watching = False
+               #     break
+
+            # Retreive the size of the pixels length, the pixels length and pixels
+            size_len = int.from_bytes(sock.recv(1), byteorder='big')
+            if not size_len:
+                pygame.quit()
+                break
+            # size = int.from_bytes(sock.recv(size_len), byteorder='big')
+            size = int.from_bytes(recvall(sock, size_len), byteorder='big')
+
+            pixels = decompress(recvall(sock, size))
+            print(pixels)
+            console.log(pixels)
+
+            # Create the Surface from raw pixels
+            img = pygame.image.fromstring(pixels, (WIDTH, HEIGHT), 'RGB')
+    
+            # Display the picture
+            screen.blit(img, (0, 0))
+            pygame.display.flip()
+            clock.tick(60)
+            pygame.quit()
+    except Exception as e:
+        print(e)
+document["my_button"].bind("click", main)
+                                
+            </script>
+    </head>
+
+
+  
     <h1>
     "Url link"
     </h1>
+
+    <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+    <script type="text/javascript" charset="utf-8">
+    console.log("here")
+        var socket = io('ws://127.0.0.1:8001');
+        socket.on('connect', function() {
+            socket.emit('my event', {
+    data: 'User Connected'
+  })
+        });
+    </script>        -->
     <a href="http://192.168.0.136:8000/start_server">Click on the server</a>
     <a href="http://192.168.0.136:8000/start_client">Click on the client</a>
-    
+ <button id="mybutton">
+  
+<body onload="brython(1)">
+
+    <input id="data">
+    <button id="my_button">Run WebSocket</button>
+    <p><button onclick="close_connection()">Close connection</button>
+
+
+   
+                 
+
+    </body>
+
+
 </html>
