@@ -55,7 +55,7 @@ async def image(websocket, path):
         buffer = io.BytesIO()
 
         im=ImageGrab.grab()
-        im.save(buffer, format='SVG')
+        im.save(buffer,quality=20,optimize=True, format='PNG')
         im.close()
 
         b64_str = base64.b64encode(buffer.getvalue())
